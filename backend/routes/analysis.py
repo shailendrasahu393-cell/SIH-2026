@@ -79,8 +79,7 @@ async def analyze_audio(
     # -----------------------------------------------------
 
     risk_result = calculate_risk(
-        ai_probability=ml_result["ai_probability"],
-        audio_quality_score=ml_result["audio_quality_score"]
+        ai_probability=ml_result["ai_probability"]
     )
 
 
@@ -124,17 +123,20 @@ async def analyze_audio(
     # -----------------------------------------------------
 
     return {
+
         "analysis_id": analysis.analysis_id,
+
         "filename": analysis.original_filename,
 
-        "is_ai_generated": risk_result["is_ai_generated"],
-        "ai_probability": ml_result["ai_probability"],
+        "is_ai_generated": analysis.is_ai_generated,
 
-        "audio_quality_score": ml_result["audio_quality_score"],
-        "audio_quality_level": ml_result["audio_quality_level"],
+        "ai_probability": float(
+            analysis.ai_probability
+        ),
 
-        "risk_score": risk_result["risk_score"],
-        "risk_level": risk_result["risk_level"],
+        "risk_score": analysis.risk_score,
+
+        "risk_level": analysis.risk_level,
 
         "message": analysis.risk_message
     }
